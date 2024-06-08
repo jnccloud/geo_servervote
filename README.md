@@ -6,6 +6,10 @@ It was built for qbx_core, but supports license and license2. I am open to PRs b
 
 Please don't change the name of the script so I can see how many people actually use it. :)
 
+## Demo 
+
+[![Demo](http://img.youtube.com/vi/I5X_LwFdKYg/0.jpg)](http://www.youtube.com/watch?v=I5X_LwFdKYg "geo_servervote demo")
+
 ## Dependencies
 - qbx_core
 - ox_inventory
