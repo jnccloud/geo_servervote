@@ -12,7 +12,6 @@ Please don't change the name of the script so I can see how many people actually
 
 ## Dependencies
 - qbx_core
-- ox_inventory
 - ox_lib
 - oxmysql
 
