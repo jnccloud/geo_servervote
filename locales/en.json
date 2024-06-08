@@ -1,0 +1,28 @@
+{
+    "error": {
+        "vote_already_claimed" : "You have already claimed your reward.",
+        "vote_not_found" : "Vote Not Found",
+        "try_again" : "You haven't voted yet! Use /vote and check your vote again in 10 minutes!",
+        "steam_not_found" : "Steam/Discord has not been found, you cannot claim any rewards. Please start Steam/Discord before joining the server to claim your vote.",
+        "api" : "API Error",
+        "api_try_later" : "An error occurred while checking your vote. Please try again later.",
+        "api_contact_owner" : "Error checking vote, contact server owner",
+        "api_fault" : "Unexpected response from TrackyServer API"
+    },
+    "success": {
+        "vote_claimed" : "Congratulations. You have claimed your reward for today's vote.",
+        "vote_success" : "You have voted! Claim your reward!",
+        "vote_found" : "Vote Found"
+    },
+    "info": {
+        "server_voting": "Server Voting",
+        "checking_vote" : "We are checking for your vote!",
+        "server_rewards": "Server rewards",
+        "confirm_reward" : "Are you sure you want to claim your reward ($%s) on this character?",
+        "vote" : "Please vote at %s",
+        "vote_not_found" : "You have not yet voted. Go to %s to vote.",
+        "checkvote_help" : "Get a reward for voting for this server. %s will need to be running",
+        "vote_help" : "Get the vote link for this server",
+        "open_browser" : "You haven't voted yet - open your web browser and paste the link to vote now!"
+    }
+}
