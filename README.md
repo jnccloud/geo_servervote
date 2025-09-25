@@ -37,7 +37,7 @@ Please don't change the name of the script so I can see how many people actually
 
 ## Credits
 - This script was created by Castar and Geo City Roleplay.
-- For support and more information, visit the [Geo City Roleplay Discord server](https://discord.gg/geo).
+- For support and more information, visit the [Geo City Roleplay Discord server](https://discord.gg/geocityrp).
 - The idea for the script came from Murgator's `FiveM-vote-script`. But it is no longer maintained and I wanted a safer and modern vote script for TrackyServer.
 - TrackyServer for providing a developer API
 
