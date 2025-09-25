@@ -165,7 +165,7 @@ AddEventHandler('onResourceStart', function(resource)
         if response['warningStatus'] == 0 then
             print('$ Created database table `geo_servervote`... Have fun!')
         end
-        print('$ Made with <3 by Castar & Geo City Roleplay - https://discord.gg/geo')
+        print('$ Made with <3 by Castar & Geo City Roleplay - https://discord.gg/geocityrp')
     end)
 end)
 
