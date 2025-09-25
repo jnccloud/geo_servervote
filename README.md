@@ -32,6 +32,13 @@ Please don't change the name of the script so I can see how many people actually
 
 ## Customization
 - You can customize the rewards and bonus amounts in the `config/server.lua` file.
+- **NEW**: The script now supports both money and item rewards:
+  - Set `rewards.type` to 'money' for cash rewards only
+  - Set `rewards.type` to 'items' for item rewards only  
+  - Set `rewards.type` to 'both' for both money and items
+- Configure money rewards in `rewards.money.daily` and `rewards.money.bonus`
+- Configure item rewards in `rewards.items.daily` and `rewards.items.bonus`
+- Legacy configurations (using `rewards.daily` and `rewards.bonus` directly) are still supported
 - You can modify the notification messages in the `notify` function.
 - You can change the API endpoints and URLs in the `buildUrl` function. (don't touch)
 

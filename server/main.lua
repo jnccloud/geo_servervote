@@ -37,19 +37,64 @@ end
 
 --- Calculates the reward for a given license.
 --- @param license string The license for which to calculate the reward.
---- @return number The calculated reward.
+--- @return table The calculated reward containing money and/or items.
 local function calculateReward(license)
-    local rewardAmount = config.rewards.daily
     local votes = tonumber(MySQL.scalar.await('SELECT count(*) FROM geo_servervote WHERE license = ?', {license}))
-    if config.rewards.bonus[votes] then rewardAmount = rewardAmount + config.rewards.bonus[votes] end
-    return rewardAmount
+    local reward = {
+        money = 0,
+        items = {}
+    }
+    
+    -- Determine reward type from config
+    local rewardType = config.rewards.type or 'money'
+    
+    -- Handle legacy config format (backward compatibility)
+    if config.rewards.daily and not config.rewards.money then
+        rewardType = 'money'
+        reward.money = config.rewards.daily
+        if config.rewards.bonus[votes] then
+            reward.money = reward.money + config.rewards.bonus[votes]
+        end
+        return reward
+    end
+    
+    -- Handle new config format
+    if rewardType == 'money' or rewardType == 'both' then
+        if config.rewards.money then
+            reward.money = config.rewards.money.daily or 0
+            if config.rewards.money.bonus[votes] then
+                reward.money = reward.money + config.rewards.money.bonus[votes]
+            end
+        end
+    end
+    
+    if rewardType == 'items' or rewardType == 'both' then
+        if config.rewards.items then
+            -- Add daily items
+            if config.rewards.items.daily then
+                for _, item in pairs(config.rewards.items.daily) do
+                    table.insert(reward.items, item)
+                end
+            end
+            -- Add bonus items
+            if config.rewards.items.bonus[votes] then
+                for _, item in pairs(config.rewards.items.bonus[votes]) do
+                    table.insert(reward.items, item)
+                end
+            end
+        end
+    end
+    
+    return reward
 end
 
 --- Inserts a vote into the database for bonus tracking.
 --- @param identifier string The identifier of the player who initiated the vote.
 --- @param license string The license of the player who initiated the vote.
---- @param amount number The amount of the reward for the vote.
-local function insertVote(identifier, license, amount)
+--- @param reward table The reward object containing money and/or items.
+local function insertVote(identifier, license, reward)
+    -- For database compatibility, store the money amount (or 0 if no money)
+    local amount = reward.money or 0
     MySQL.execute('INSERT INTO geo_servervote (identifier, license, amount) VALUES (?, ?, ?)', {identifier, license, amount})
 end
 
@@ -96,11 +141,24 @@ end
 
 --- Gives a reward to a player.
 --- @param source number The player's source ID.
---- @param reward any The amount to give.
+--- @param reward table The reward object containing money and/or items.
 local function giveReward(source, reward)
     if config.framework == 'qbox' then
         local player = exports.qbx_core:GetPlayer(source)
-        player.Functions.AddMoney(config.moneytype, reward, 'geo_servervote_reward')
+        
+        -- Give money if present
+        if reward.money and reward.money > 0 then
+            player.Functions.AddMoney(config.moneytype, reward.money, 'geo_servervote_reward')
+        end
+        
+        -- Give items if present
+        if reward.items and #reward.items > 0 then
+            for _, item in pairs(reward.items) do
+                if item.name and item.amount then
+                    player.Functions.AddItem(item.name, item.amount, nil, nil, 'geo_servervote_reward')
+                end
+            end
+        end
     end
 end
 
